@@ -20,6 +20,15 @@
       }
     });
 
+    // Close mobile menu when resizing to desktop size
+    window.addEventListener('resize', function() {
+      if (window.innerWidth >= 1024) {
+        mobileMenu.classList.add('hidden');
+        line1.classList.remove('translate-y-[5px]', '-rotate-45', 'transform-gpu');
+        line2.classList.remove('-translate-y-[5px]', 'rotate-45', 'transform-gpu');
+      }
+    });
+
     // Accordion functionality
     const accordionItems = document.querySelectorAll('.accordion-item')
     accordionItems.forEach(item => {

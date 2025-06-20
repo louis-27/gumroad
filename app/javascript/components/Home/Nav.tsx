@@ -1,11 +1,12 @@
-import * as React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useCurrentSeller } from "$app/components/CurrentSeller";
 import { useAppDomain, useDiscoverUrl } from "$app/components/DomainSettings";
 import { useOriginalLocation } from "$app/components/useOriginalLocation";
 
 import logo from "$assets/images/logo.svg";
+
+const LG_BREAKPOINT = 1024;
 
 const NavLink = ({
   text,
@@ -62,6 +63,17 @@ export const Nav = () => {
   const appDomain = useAppDomain();
   const discoverUrl = useDiscoverUrl();
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= LG_BREAKPOINT) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const navLinks = (
     <>
       <NavLink text="Discover" href={discoverUrl} />
@@ -103,7 +115,7 @@ export const Nav = () => {
         </div>
       </div>
       <div
-        className={`override sticky left-0 right-0 top-20 z-50 flex-col justify-between border-b border-black bg-black dark:border-white/[.35] ${isMobileMenuOpen ? "flex" : "hidden"} `}
+        className={`override sticky left-0 right-0 top-20 z-50 flex-col justify-between border-b border-black bg-black lg:hidden dark:border-white/[.35] ${isMobileMenuOpen ? "flex" : "hidden"} `}
       >
         <div className="flex flex-col items-center justify-center lg:flex-row lg:gap-2 lg:px-8">
           {navLinks}
